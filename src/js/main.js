@@ -2,10 +2,11 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload:
 
 function preload() {
   game.load.image('car', '/assets/sprites/RedCar.png');
-  game.load.image('grass', 'http://static.yooco.de/s1/images/website/2813521/image/texture-grass.jpg')
+  game.load.tilemap('level', 'assets/maps/Level.json', null, Phaser.Tilemap.TILED_JSON);
+  game.load.image('tilesheet', 'assets/tilesheets/tilesheet.png');
 }
 
-var sprite;
+var car;
 
 function create() {
   game.time.advancedTiming = true;
@@ -14,45 +15,58 @@ function create() {
 
   game.stage.backgroundColor = '#0072bc';
 
-  sprite = game.add.sprite(400, 300, 'car');
-  sprite.anchor.setTo(0.5, 0.5);
-  sprite.scale.setTo(.25,.25);
-  sprite.enableBody = true;
+  map = game.add.tilemap('level');
+  map.addTilesetImage('tilesheet', 'tilesheet');
+  grass = map.createLayer('Grass');
+  road = map.createLayer('Road');
+  //layer.resizeWorld();
 
 
-  game.physics.enable(sprite, Phaser.Physics.ARCADE);
+  game.physics.arcade.enable(road);
 
-  sprite.body.maxAngular = 300;
-  sprite.body.angularDrag = 900;
+  grass.resizeWorld();
 
-  sprite.body.drag.set(100);
-  sprite.body.maxVelocity.set(500);
 
-  sprite.body.collideWorldBounds = true;
-  //game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-  cursors = game.input.keyboard.createCursorKeys();
+  car = game.add.sprite(400, 300, 'car');
+  car.anchor.setTo(0.5, 0.5);
+  car.scale.setTo(.25,.25);
+  car.enableBody = true;
+
+
+  game.physics.enable(car, Phaser.Physics.ARCADE);
+  game.physics.arcade.collide(car, road)
+
+  car.body.maxAngular = 300;
+  car.body.angularDrag = 900;
+
+  car.body.drag.set(100);
+  car.body.maxVelocity.set(500);
+
+  car.body.collideWorldBounds = true;
+
+  game.camera.follow(car);
 
 }
 
 function update() {
 
-  sprite.body.angularAcceleration = 0;
-  sprite.body.acceleration.set(0);
-  sprite.body.velocity.x = 0;
-  sprite.body.velocity.y = 0;
+  car.body.angularAcceleration = 0;
+  car.body.acceleration.set(0);
+  car.body.velocity.x = 0;
+  car.body.velocity.y = 0;
 
   if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) || game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-    sprite.body.angularAcceleration -= 900;
+    car.body.angularAcceleration -= 900;
   } else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) || game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-    sprite.body.angularAcceleration += 900;
+    car.body.angularAcceleration += 900;
   }
 
   if (game.input.keyboard.isDown(Phaser.Keyboard.UP) || game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-    game.physics.arcade.velocityFromAngle(sprite.angle, 500, sprite.body.velocity);
-    //game.physics.arcade.accelerationFromRotation(sprite.rotation, 1000, sprite.body.acceleration);
+    game.physics.arcade.velocityFromAngle(car.angle, 500, car.body.velocity);
+    //game.physics.arcade.accelerationFromRotation(car.rotation, 1000, car.body.acceleration);
   } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) || game.input.keyboard.isDown(Phaser.Keyboard.S)) {
-    game.physics.arcade.velocityFromAngle(sprite.angle, -500, sprite.body.velocity);
-    //game.physics.arcade.velocityFromAngle(sprite.angle, -100, sprite.body.velocity);
+    game.physics.arcade.velocityFromAngle(car.angle, -500, car.body.velocity);
+    //game.physics.arcade.velocityFromAngle(car.angle, -100, car.body.velocity);
   }
 
 
@@ -60,8 +74,9 @@ function update() {
 
 function render() {
   game.debug.text(game.time.fps, 2, 14, "#00ff00");
-  game.debug.text(sprite.body.acceleration, 2, 32, "#00ff00");
-  game.debug.text(sprite.body.velocity, 2, 50, "#00ff00");
-  game.debug.text(sprite.body.speed, 2, 75, "#00ff00");
+  game.debug.text(car.body.acceleration, 2, 32, "#00ff00");
+  game.debug.text(car.body.velocity, 2, 50, "#00ff00");
+  game.debug.text(car.body.speed, 2, 75, "#00ff00");
+  game.debug.cameraInfo(game.camera, 32, 150);
 }
 

@@ -1,0 +1,46 @@
+{ "height":10,
+ "layers":[
+        {
+         "data":[8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+         "height":10,
+         "name":"Grass",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":10,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 11, 0, 0, 0, 0, 0, 0, 0, 0, 6, 4, 3, 11, 0, 0, 0, 10, 3, 3, 9, 0, 0, 6, 0, 0, 0, 6, 10, 3, 3, 3, 11, 6, 0, 0, 0, 4, 9, 0, 0, 0, 4, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":10,
+         "name":"Road",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":10,
+         "x":0,
+         "y":0
+        }],
+ "nextobjectid":6,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tileheight":256,
+ "tilesets":[
+        {
+         "columns":6,
+         "firstgid":1,
+         "image":"..\/tilesheets\/tilesheet.png",
+         "imageheight":512,
+         "imagewidth":1536,
+         "margin":0,
+         "name":"tilesheet",
+         "spacing":0,
+         "tilecount":12,
+         "tileheight":256,
+         "tilewidth":256
+        }],
+ "tilewidth":256,
+ "version":1,
+ "width":10
+}
