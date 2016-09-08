@@ -6,15 +6,18 @@ var MainMenu = {
     game.load.spritesheet('credits_button', 'assets/buttons/credits_button.png', 256, 64);
 
     game.load.image('background', 'assets/images/main_background.png');
+
+    game.load.audio('background_music', 'assets/audio/background.mp3')
   },
 
   create: function () {
-    game.stage.backgroundColor = '#FF9E1F';
-    //this.background = game.add.image(0, 0, 1280, 720, 'background');
+    backgroundMusic = game.add.audio('background_music');
+    backgroundMusic.play();
+
     this.background = game.add.sprite(0, 0, 'background');
 
     this.onStartClick = function () {
-      game.state.start('game');
+      game.state.start('car_choose');
     };
 
     this.startButton = game.add.button(game.world.centerX, 200, 'start_button', this.onStartClick, this, 2, 1, 0);
