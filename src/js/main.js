@@ -1,4 +1,5 @@
 var game = new Phaser.Game(1280, 720, Phaser.CANVAS, 'phaser-example');
+var carColor = 'red';
 
 var initialState = {
   preload: function () {
@@ -6,6 +7,7 @@ var initialState = {
     game.load.script('main_menu', 'js/states/MainMenu.js');
     game.load.script('credits', 'js/states/Credits.js');
     game.load.script('car_choose', 'js/states/CarChoose.js');
+    game.load.script('tutorial', 'js/states/Tutorial.js');
   },
 
   create: function () {
@@ -15,6 +17,7 @@ var initialState = {
     game.state.add('game', GameState);
     game.state.add('car_choose', CarChoose);
     game.state.add('credits', Credits);
+    game.state.add('tutorial', Tutorial);
 
     game.state.start('main_menu');
   }

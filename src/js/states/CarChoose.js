@@ -18,9 +18,14 @@ var CarChoose = {
     car = game.add.audio('car');
     car.play();
 
+    startNextState = function () {
+      game.state.start('tutorial');
+    };
+
     onRedClick = function () {
       console.log('RedCar');
-
+      carColor = 'red';
+      startNextState();
     };
     
     redCar = game.add.button(160, game.world.centerY, 'RedCar', onRedClick, this, 2, 1, 0);
@@ -29,6 +34,8 @@ var CarChoose = {
 
     onBlueClick = function () {
       console.log('BlueCar');
+      carColor = 'blue';
+      startNextState();
     };
     
     blueCar = game.add.button(480, game.world.centerY, 'BlueCar', onBlueClick, this, 2, 1, 0);
@@ -37,6 +44,8 @@ var CarChoose = {
 
     onYellowClick = function () {
       console.log('YellowCar');
+      carColor = 'yellow';
+      startNextState();
     };
     
     yellowCar = game.add.button(800, game.world.centerY, 'YellowCar', onYellowClick, this, 2, 1, 0);
@@ -45,6 +54,8 @@ var CarChoose = {
 
     onGreenClick = function () {
       console.log('GreenCar');
+      carColor = 'green';
+      startNextState();
     };
     
     greenCar = game.add.button(1120, game.world.centerY, 'GreenCar', onGreenClick, this, 2, 1, 0);
