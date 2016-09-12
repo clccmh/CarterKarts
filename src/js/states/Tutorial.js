@@ -5,7 +5,7 @@ var Tutorial = {
     instructions.anchor.setTo(0.5);
     instructions.fontSize = 40;
     game.time.events.add(Phaser.Timer.SECOND*2, function() {
-      game.state.start('game')
+      game.state.start('level1')
     }, this);
   },
 }

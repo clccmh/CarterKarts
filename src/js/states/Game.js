@@ -22,7 +22,6 @@ var GameState = {
 
     mapGroup = game.add.group();
     carGroup = game.add.group();
-    //finishLineGroup = game.add.group();
     textGroup = game.add.group();
     
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -37,13 +36,29 @@ var GameState = {
     road = map.createLayer('Road');
     mapGroup.add(road);
 
-    //finishLineGroup.enableBody = true;
-    //map.createFromObjects('FinishLine', 8, finish, 0, true, false, finishLineGroup);
+    finishLine = game.add.sprite(256, 500);
+    finishLine.scale.x = 256;
+    finishLine.scale.y = 1;
+    finishLine.enableBody = true;
+    game.physics.enable(finishLine, Phaser.Physics.ARCADE);
+    finishLine.body.immovable = true;
 
-    finish = map.createLayer('FinishLine');
-    mapGroup.add(finish);
-    console.log(finish);
-    map.setCollisionBetween(1, 10000, true, finish);
+    canLap = game.add.sprite(256, 560);
+    canLap.scale.x = 256;
+    canLap.scale.y = 1;
+    canLap.enableBody = true;
+    game.physics.enable(canLap, Phaser.Physics.ARCADE);
+    canLap.body.immovable = true;
+
+    this.lapping = false;
+    this.laps = 0;
+
+    this.lapText = game.add.text(5, 15, "Laps: 0");
+    this.lapText.fontSize = 20;
+    this.lapText.fill = "#ffffff";
+    this.lapText.fixedToCamera = true;
+    textGroup.add(this.lapText);
+
 
     map.setCollisionBetween(1, 10000, true, grass);
     grass.resizeWorld();
@@ -98,7 +113,16 @@ var GameState = {
   },
 
   update: function () {
+
+    if (game.lapsInRace == this.laps) {
+      game.world.setBounds(0, 0, game.width, game.height);
+      game.state.start('credits');
+    }
+
     game.physics.arcade.collide(this.car, grass)
+    if (!this.lapping) {
+      game.physics.arcade.collide(this.car, finishLine);
+    }
 
     this.car.body.angularAcceleration = 0;
     this.car.body.acceleration.set(0);
@@ -106,10 +130,16 @@ var GameState = {
     this.car.body.velocity.y = 0;
 
     if (!this.preRace) {
-      //This is not working because the finish layer is the size of the whole map
-      game.physics.arcade.overlap(this.car, finish, function () {
-        console.log('lap');
-      }, null, this);
+
+      if (!this.lapping && game.physics.arcade.collide(this.car, canLap)) {
+        console.log('canLap');
+        this.lapping = true;
+        this.laps += 1;
+      }
+
+      if (game.physics.arcade.overlap(this.car, finishLine)) {
+        this.lapping = false;
+      }
 
       if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) || game.input.keyboard.isDown(Phaser.Keyboard.A)) {
         if (this.car.body.acceleration > 0) {
@@ -139,6 +169,9 @@ var GameState = {
 
   render: function () {
     this.raceTime.setText("Time: " + this.timer.seconds.toFixed(2));
+    this.lapText.setText("Laps: " + this.laps);
+    game.debug.spriteBounds(finishLine);
+    game.debug.spriteBounds(canLap);
   }
 
 };

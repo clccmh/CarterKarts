@@ -11,12 +11,12 @@ var CarChoose = {
 
   create: function () {
 
+    car = game.add.audio('car');
+    car.play();
+
     text = game.add.text(game.world.centerX, 200, "Choose your car!");
     text.anchor.setTo(0.5);
     text.fontSize = 40;
-
-    car = game.add.audio('car');
-    car.play();
 
     startNextState = function () {
       game.state.start('tutorial');
