@@ -36,22 +36,15 @@ var GameState = {
     road = map.createLayer('Road');
     mapGroup.add(road);
 
-    finishLine = game.add.sprite(256, 500);
-    finishLine.scale.x = 256;
-    finishLine.scale.y = 1;
+    finishLine = game.add.sprite(256, 512);
+    finishLine.scale.x = 10;
+    finishLine.scale.y = .01;
     finishLine.enableBody = true;
     game.physics.enable(finishLine, Phaser.Physics.ARCADE);
     finishLine.body.immovable = true;
 
-    canLap = game.add.sprite(256, 560);
-    canLap.scale.x = 256;
-    canLap.scale.y = 1;
-    canLap.enableBody = true;
-    game.physics.enable(canLap, Phaser.Physics.ARCADE);
-    canLap.body.immovable = true;
-
-    this.lapping = false;
     this.laps = 0;
+    this.previousLapTime = 0;
 
     this.lapText = game.add.text(5, 15, "Laps: 0");
     this.lapText.fontSize = 20;
@@ -59,10 +52,8 @@ var GameState = {
     this.lapText.fixedToCamera = true;
     textGroup.add(this.lapText);
 
-
     map.setCollisionBetween(1, 10000, true, grass);
     grass.resizeWorld();
-
 
     this.car = game.add.sprite(400, 300, 'car');
     this.car.anchor.setTo(0.5, 0.5);
@@ -114,32 +105,37 @@ var GameState = {
 
   update: function () {
 
+    // Check if the game if over or not
     if (game.lapsInRace == this.laps) {
       game.world.setBounds(0, 0, game.width, game.height);
-      game.state.start('credits');
+      if (this.timer.seconds.toFixed(2) < game.timeToFinish) {
+        game.state.start('level' + game.levelNumber + '_win');
+      } else {
+        game.state.start('level' + game.levelNumber + '_lose');
+      }
     }
 
     game.physics.arcade.collide(this.car, grass)
-    if (!this.lapping) {
-      game.physics.arcade.collide(this.car, finishLine);
-    }
 
     this.car.body.angularAcceleration = 0;
     this.car.body.acceleration.set(0);
     this.car.body.velocity.x = 0;
     this.car.body.velocity.y = 0;
 
+    // Disables input while the countdown is happening
     if (!this.preRace) {
 
-      if (!this.lapping && game.physics.arcade.collide(this.car, canLap)) {
-        console.log('canLap');
-        this.lapping = true;
-        this.laps += 1;
-      }
-
-      if (game.physics.arcade.overlap(this.car, finishLine)) {
-        this.lapping = false;
-      }
+      game.physics.arcade.collide(this.car, finishLine, null, function () {
+        if (this.car.y > finishLine.y) {
+          if (this.previousLapTime + 5 < this.timer.seconds) {
+            console.log('lap');
+            this.laps++;
+          }
+          this.previousLapTime = this.timer.seconds;
+          return false;
+        }
+        return true;
+      }, this);
 
       if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) || game.input.keyboard.isDown(Phaser.Keyboard.A)) {
         if (this.car.body.acceleration > 0) {
@@ -171,7 +167,6 @@ var GameState = {
     this.raceTime.setText("Time: " + this.timer.seconds.toFixed(2));
     this.lapText.setText("Laps: " + this.laps);
     game.debug.spriteBounds(finishLine);
-    game.debug.spriteBounds(canLap);
   }
 
 };

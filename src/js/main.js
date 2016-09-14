@@ -18,6 +18,8 @@ var initialState = {
     game.state.add('car_choose', CarChoose);
     game.state.add('tutorial', Tutorial);
     game.state.add('level1', Level1);
+    game.state.add('level1_win', Level1Win);
+    game.state.add('level1_lose', Level1Lose);
     game.state.add('game', GameState);
     game.state.add('credits', Credits);
 
