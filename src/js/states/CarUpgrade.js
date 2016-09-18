@@ -15,18 +15,22 @@ var CarUpgrade = {
       game.state.start('level' + (parseInt(game.levelNumber)+1));
     };
 
-    this.onEngineClick = function () {
+    this.engineButton = game.add.button(game.world.centerX, game.world.centerY-100, 'engine_button', function () {
       game.enginePoints += 1;
       this.startNextLevel();
-    };
-
-    this.engineButton = game.add.button(game.world.centerX, game.world.centerY-100, 'engine_button', this.onEngineClick, this, 2, 1, 0);
+    }, this, 2, 1, 0);
     this.engineButton.anchor.setTo(0.5, 0.5);
 
-    this.tiresButton = game.add.button(game.world.centerX, game.world.centerY, 'tires_button', this.onEngineClick, this, 2, 1, 0);
+    this.tiresButton = game.add.button(game.world.centerX, game.world.centerY, 'tires_button', function () {
+      game.tirePoints += 1;
+      this.startNextLevel();
+    }, this, 2, 1, 0);
     this.tiresButton.anchor.setTo(0.5, 0.5);
 
-    this.strengthButton = game.add.button(game.world.centerX, game.world.centerY+100, 'strength_button', this.onEngineClick, this, 2, 1, 0);
+    this.strengthButton = game.add.button(game.world.centerX, game.world.centerY+100, 'strength_button', function () {
+      game.strengthPoints += 1;
+      this.startNextLevel();
+    }, this, 2, 1, 0);
     this.strengthButton.anchor.setTo(0.5, 0.5);
 
   }

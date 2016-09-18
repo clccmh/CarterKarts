@@ -1,6 +1,11 @@
 
 var Level1 = {
   preload: function () {
+    game.load.audio('level1Sound', 'assets/audio/level1.mp3')
+  },
+  create: function () {
+    game.add.audio('level1Sound').play();
+
     console.log('Level1');
     levelHeading = game.add.text(game.world.centerX, 250, "Level 1");
     levelHeading.anchor.setTo(0.5);

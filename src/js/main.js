@@ -33,5 +33,7 @@ var initialState = {
 };
 
 game.enginePoints = 0;
+game.tirePoints = 0;
+game.strengthPoints = 0;
 game.state.add('initialState', initialState);
 game.state.start('initialState');

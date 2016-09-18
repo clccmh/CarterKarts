@@ -12,6 +12,7 @@ var MainMenu = {
 
   create: function () {
     backgroundMusic = game.add.audio('background_music');
+    backgroundMusic.loop = true;
     backgroundMusic.play();
 
     this.background = game.add.sprite(0, 0, 'background');
