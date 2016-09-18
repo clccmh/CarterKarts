@@ -9,6 +9,7 @@ var initialState = {
     game.load.script('car_choose', 'js/states/CarChoose.js');
     game.load.script('tutorial', 'js/states/Tutorial.js');
     game.load.script('levels', 'js/states/Levels.js');
+    game.load.script('upgrade', 'js/states/CarUpgrade.js');
   },
 
   create: function () {
@@ -20,6 +21,10 @@ var initialState = {
     game.state.add('level1', Level1);
     game.state.add('level1_win', Level1Win);
     game.state.add('level1_lose', Level1Lose);
+    game.state.add('level2', Level2);
+    game.state.add('level2_win', Level2Win);
+    game.state.add('level2_lose', Level2Lose);
+    game.state.add('upgrade', CarUpgrade);
     game.state.add('game', GameState);
     game.state.add('credits', Credits);
 
@@ -27,5 +32,6 @@ var initialState = {
   }
 };
 
+game.enginePoints = 0;
 game.state.add('initialState', initialState);
 game.state.start('initialState');

@@ -2,7 +2,7 @@
 var GameState = {
 
   preload: function () {
-    switch (carColor) {
+    switch (game.carColor) {
       case 'red':
         game.load.image('car', '/assets/sprites/RedCar.png');
       case 'blue':
@@ -10,9 +10,9 @@ var GameState = {
       case 'yellow':
         game.load.image('car', '/assets/sprites/YellowCar.png');
       case 'green':
-        game.load.image('car', '/assets/sprites/RedCar.png');
+        game.load.image('car', '/assets/sprites/GreenCar.png');
     }
-    game.load.tilemap('level', 'assets/maps/Level.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level', 'assets/maps/Level' + game.levelNumber + '.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tilesheet', 'assets/tilesheets/tilesheet.png');
   },
 
@@ -68,7 +68,7 @@ var GameState = {
     this.car.body.angularDrag = 900;
 
     this.car.body.drag.set(100);
-    this.car.body.maxVelocity.set(500);
+    this.car.body.maxVelocity.set(500 + (game.enginePoints*10));
 
     this.car.body.collideWorldBounds = true;
 
@@ -152,10 +152,10 @@ var GameState = {
       }
 
       if (game.input.keyboard.isDown(Phaser.Keyboard.UP) || game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-        game.physics.arcade.velocityFromAngle(this.car.angle, 500, this.car.body.velocity);
+        game.physics.arcade.velocityFromAngle(this.car.angle, 500+(game.enginePoints*10), this.car.body.velocity);
         //game.physics.arcade.accelerationFromRotation(car.rotation, 1000, car.body.acceleration);
       } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) || game.input.keyboard.isDown(Phaser.Keyboard.S)) {
-        game.physics.arcade.velocityFromAngle(this.car.angle, -500, this.car.body.velocity);
+        game.physics.arcade.velocityFromAngle(this.car.angle, -500-(game.enginePoints*10), this.car.body.velocity);
         //game.physics.arcade.velocityFromAngle(car.angle, -100, car.body.velocity);
       }
 

@@ -24,7 +24,7 @@ var CarChoose = {
 
     onRedClick = function () {
       console.log('RedCar');
-      carColor = 'red';
+      game.carColor = 'red';
       startNextState();
     };
     
@@ -34,7 +34,7 @@ var CarChoose = {
 
     onBlueClick = function () {
       console.log('BlueCar');
-      carColor = 'blue';
+      game.carColor = 'blue';
       startNextState();
     };
     
@@ -44,7 +44,7 @@ var CarChoose = {
 
     onYellowClick = function () {
       console.log('YellowCar');
-      carColor = 'yellow';
+      game.carColor = 'yellow';
       startNextState();
     };
     
@@ -54,7 +54,7 @@ var CarChoose = {
 
     onGreenClick = function () {
       console.log('GreenCar');
-      carColor = 'green';
+      game.carColor = 'green';
       startNextState();
     };
     
