@@ -2,22 +2,21 @@
 var GameState = {
 
   preload: function () {
-    switch (game.carColor) {
-      case 'red':
-        game.load.image('car', '/assets/sprites/RedCar.png');
-        game.load.image('ai', '/assets/sprites/BlueCar.png');
-      case 'blue':
-        game.load.image('car', '/assets/sprites/BlueCar.png');
-        game.load.image('ai', '/assets/sprites/RedCar.png');
-      case 'yellow':
-        game.load.image('car', '/assets/sprites/YellowCar.png');
-        game.load.image('ai', '/assets/sprites/RedCar.png');
-      case 'green':
-        game.load.image('car', '/assets/sprites/GreenCar.png');
-        game.load.image('ai', '/assets/sprites/RedCar.png');
+    if (game.carColor == 'red') {
+        this.playerColor = 'red_car';
+        this.aiColor = 'blue_car';
+    } else if (game.carColor == 'blue') {
+        this.playerColor = 'blue_car';
+        this.aiColor = 'red_car';
+    } else if (game.carColor == 'yellow') {
+        this.playerColor = 'yellow_car';
+        this.aiColor = 'red_car';
+    } else if (game.carColor == 'green') {
+        this.playerColor = 'green_car';
+        this.aiColor = 'red_car';
     }
+
     game.load.tilemap('level', 'assets/maps/Level' + game.levelNumber + '.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tilesheet', 'assets/tilesheets/tilesheet.png');
   },
 
   create: function () {
@@ -59,7 +58,7 @@ var GameState = {
     map.setCollisionBetween(1, 10000, true, grass);
     grass.resizeWorld();
 
-    this.car = game.add.sprite(400, 300, 'car');
+    this.car = game.add.sprite(400, 300, this.playerColor);
     this.car.anchor.setTo(0.5, 0.5);
     this.car.scale.setTo(.25,.25);
     this.car.enableBody = true;
@@ -74,18 +73,20 @@ var GameState = {
     this.car.body.collideWorldBounds = true;
 
     game.camera.follow(this.car);
-
-    this.ai = game.add.sprite(400, 400, 'ai');
-    this.ai.anchor.setTo(0.5, 0.5);
-    this.ai.scale.setTo(.25, .25);
-    this.ai.enableBody = true;
-    carGroup.add(this.ai);
-    game.physics.enable(this.ai, Phaser.Physics.ARCADE);
-    this.ai.body.maxAngular = 250;
-    this.ai.body.angularDrag = 900;
-    this.ai.body.drag.set(100);
-    this.ai.body.maxVelocity.set(500);
-    this.ai.body.collideWorldBounds = true;
+    
+    if (game.hasAi) {
+      this.ai = game.add.sprite(400, 400, this.aiColor);
+      this.ai.anchor.setTo(0.5, 0.5);
+      this.ai.scale.setTo(.25, .25);
+      this.ai.enableBody = true;
+      carGroup.add(this.ai);
+      game.physics.enable(this.ai, Phaser.Physics.ARCADE);
+      this.ai.body.maxAngular = 250;
+      this.ai.body.angularDrag = 900;
+      this.ai.body.drag.set(100);
+      this.ai.body.maxVelocity.set(game.carVelocity + 75);
+      this.ai.body.collideWorldBounds = true;
+    }
 
     text = game.add.text(game.camera.width/2, game.camera.height/2, "Ready!");
     text.anchor.setTo(0.5);
@@ -184,43 +185,34 @@ var GameState = {
           game.physics.arcade.velocityFromAngle(this.car.angle, -game.carVelocity, this.car.body.velocity);
         }
       }
-
-      //Update AI
-      this.ai.body.velocity.x = 0;
-      this.ai.body.velocity.y = 0;
-      //tileX = Math.floor(Math.floor(this.ai.y) / 256); 
-      //tileY = Math.floor(Math.floor(this.ai.x) / 256);
-      tileX = Math.floor(this.ai.y / 256); 
-      tileY = Math.floor(this.ai.x / 256);
-      playertileX = Math.floor(this.car.y / 256); 
-      playertileY = Math.floor(this.car.x / 256);
-      console.log("y: " + tileX + "\t x: " + tileY);
-      console.log("Player y: " + playertileX + "\t player x: " + playertileY);
-      console.log("angle: " + this.ai.angle);
-      game.physics.arcade.collide(this.ai, grass, function () {
-        console.log('Above: ' + map.getTileAbove(map.getLayer(road), tileX, tileY).index);
-        console.log('Below: ' + map.getTileBelow(map.getLayer(road), tileX, tileY).index);
-        console.log('Right: ' + map.getTileRight(map.getLayer(road), tileX, tileY).index);
-        console.log('Left: ' + map.getTileLeft(map.getLayer(road), tileX, tileY).index);
-        console.log('Grass Above: ' + map.getTileAbove(map.getLayer(grass), tileX, tileY).index);
-        console.log('Grass Below: ' + map.getTileBelow(map.getLayer(grass), tileX, tileY).index);
-        console.log('Grass Right: ' + map.getTileRight(map.getLayer(grass), tileX, tileY).index);
-        console.log('Grass Left: ' + map.getTileLeft(map.getLayer(grass), tileX, tileY).index);
-        if (this.ai.angle == 0 || this.ai.angle == 180 || this.ai.angle == -180) {
-          if (map.getTileAbove(map.getLayer(road), tileX, tileY).index != -1) {
-            this.ai.angle = this.ai.angle == 0 ? 90 : -90;
-          } else if (map.getTileBelow(map.getLayer(road), tileX, tileY).index != -1) {
-            this.ai.angle = this.ai.angle == 0 ? -90 : 90;
+      
+      if (game.hasAi) {
+        //Update AI
+        this.ai.body.velocity.x = 0;
+        this.ai.body.velocity.y = 0;
+        tileX = Math.floor(this.ai.x / 256); 
+        tileY = Math.floor(this.ai.y / 256);
+        game.physics.arcade.collide(this.ai, grass, function () {
+          console.log('Above: ' + map.getTileAbove(map.getLayer(road), tileX, tileY).index);
+          console.log('Below: ' + map.getTileBelow(map.getLayer(road), tileX, tileY).index);
+          console.log('Right: ' + map.getTileRight(map.getLayer(road), tileX, tileY).index);
+          console.log('Left: ' + map.getTileLeft(map.getLayer(road), tileX, tileY).index);
+          if (this.ai.angle == 0 || this.ai.angle == 180 || this.ai.angle == -180) {
+            if (map.getTileAbove(map.getLayer(road), tileX, tileY).index != -1) {
+              this.ai.angle = -90;
+            } else if (map.getTileBelow(map.getLayer(road), tileX, tileY).index != -1) {
+              this.ai.angle = 90;
+            }
+          }  else if (this.ai.angle == 90 || this.ai.angle == -90) {
+            if (map.getTileRight(map.getLayer(road), tileX, tileY).index != -1) {
+              this.ai.angle = 0;
+            } else if (map.getTileLeft(map.getLayer(road), tileX, tileY).index != -1) {
+              this.ai.angle = 180;
+            }
           }
-        }  else if (this.ai.angle == 90 || this.ai.angle == -90) {
-          if (map.getTileRight(map.getLayer(road), tileX, tileY).index != -1) {
-            this.ai.angle = 180;
-          } else if (map.getTileLeft(map.getLayer(road), tileX, tileY).index != -1) {
-            this.ai.angle = 0;
-          }
-        }
-      }, null, this);
-      game.physics.arcade.velocityFromAngle(this.ai.angle, 500, this.ai.body.velocity);
+        }, null, this);
+        game.physics.arcade.velocityFromAngle(this.ai.angle, game.carVelocity + 75, this.ai.body.velocity);
+      }
     }
 
   },

@@ -1,14 +1,5 @@
 
 var CarChoose = {
-  preload: function () {
-    game.load.image('RedCar', 'assets/sprites/RedCar.png');
-    game.load.image('BlueCar', 'assets/sprites/BlueCar.png');
-    game.load.image('YellowCar', 'assets/sprites/YellowCar.png');
-    game.load.image('GreenCar', 'assets/sprites/GreenCar.png');
-
-    game.load.audio('car', 'assets/audio/choose_your_car.mp3')
-  },
-
   create: function () {
 
     car = game.add.audio('car');
@@ -23,42 +14,42 @@ var CarChoose = {
     };
 
     onRedClick = function () {
-      console.log('RedCar');
+      console.log('red_car');
       game.carColor = 'red';
       startNextState();
     };
     
-    redCar = game.add.button(160, game.world.centerY, 'RedCar', onRedClick, this, 2, 1, 0);
+    redCar = game.add.button(160, game.world.centerY, 'red_car', onRedClick, this, 2, 1, 0);
     redCar.anchor.setTo(1, 0.5);
     redCar.angle = -90;
 
     onBlueClick = function () {
-      console.log('BlueCar');
+      console.log('blue_car');
       game.carColor = 'blue';
       startNextState();
     };
     
-    blueCar = game.add.button(480, game.world.centerY, 'BlueCar', onBlueClick, this, 2, 1, 0);
+    blueCar = game.add.button(480, game.world.centerY, 'blue_car', onBlueClick, this, 2, 1, 0);
     blueCar.anchor.setTo(1, 0.5);
     blueCar.angle = -90;
 
     onYellowClick = function () {
-      console.log('YellowCar');
+      console.log('yellow_car');
       game.carColor = 'yellow';
       startNextState();
     };
     
-    yellowCar = game.add.button(800, game.world.centerY, 'YellowCar', onYellowClick, this, 2, 1, 0);
+    yellowCar = game.add.button(800, game.world.centerY, 'yellow_car', onYellowClick, this, 2, 1, 0);
     yellowCar.anchor.setTo(1, 0.5);
     yellowCar.angle = -90;
 
     onGreenClick = function () {
-      console.log('GreenCar');
+      console.log('green_car');
       game.carColor = 'green';
       startNextState();
     };
     
-    greenCar = game.add.button(1120, game.world.centerY, 'GreenCar', onGreenClick, this, 2, 1, 0);
+    greenCar = game.add.button(1120, game.world.centerY, 'green_car', onGreenClick, this, 2, 1, 0);
     greenCar.anchor.setTo(1, 0.5);
     greenCar.angle = -90;
   },

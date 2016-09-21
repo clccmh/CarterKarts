@@ -14,6 +14,7 @@ var Level1 = {
     game.lapsInRace = 2;
     game.timeToFinish = 38;
     game.levelNumber = '1';
+    game.hasAi = false;
 
     levelText = game.add.text(game.world.centerX, game.world.centerY, "Before you can race on the circuit, you must qualify.\nCan you beat the clock?\nLaps: " + game.lapsInRace + "\nTime: " + game.timeToFinish);
     levelText.anchor.setTo(0.5);
@@ -58,10 +59,11 @@ var Level2 = {
     levelHeading.fontSize = 40;
 
     game.lapsInRace = 2;
-    game.timeToFinish = 36.5;
+    game.timeToFinish = 37.5;
     game.levelNumber = '2';
+    game.hasAi = true;
 
-    levelText = game.add.text(game.world.centerX, game.world.centerY, "Congrats!! You qualified. It's time to race with the big boys!\nLaps: " + game.lapsInRace + "\nTime: " + game.timeToFinish);
+    levelText = game.add.text(game.world.centerX, game.world.centerY, "Congrats!! You qualified. It's time to race with the big boys in your first race of the season!\nLaps: " + game.lapsInRace + "\nTime: " + game.timeToFinish);
     levelText.anchor.setTo(0.5);
     levelText.fontSize = 30;
 
