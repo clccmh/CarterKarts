@@ -4,16 +4,16 @@ var GameState = {
   preload: function () {
     if (game.carColor == 'red') {
         this.playerColor = 'red_car';
-        this.aiColor = 'blue_car';
+        this.aiColors = ['blue_car', 'yellow_car', 'green_car'];
     } else if (game.carColor == 'blue') {
         this.playerColor = 'blue_car';
-        this.aiColor = 'red_car';
+        this.aiColors = ['red_car', 'yellow_car', 'green_car'];
     } else if (game.carColor == 'yellow') {
         this.playerColor = 'yellow_car';
-        this.aiColor = 'red_car';
+        this.aiColors = ['blue_car', 'red_car', 'green_car'];
     } else if (game.carColor == 'green') {
         this.playerColor = 'green_car';
-        this.aiColor = 'red_car';
+        this.aiColors = ['blue_car', 'yellow_car', 'red_car'];
     }
 
     game.load.tilemap('level', 'assets/maps/Level' + game.levelNumber + '.json', null, Phaser.Tilemap.TILED_JSON);
@@ -75,17 +75,23 @@ var GameState = {
     game.camera.follow(this.car);
     
     if (game.hasAi) {
-      this.ai = game.add.sprite(400, 400, this.aiColor);
-      this.ai.anchor.setTo(0.5, 0.5);
-      this.ai.scale.setTo(.25, .25);
-      this.ai.enableBody = true;
-      carGroup.add(this.ai);
-      game.physics.enable(this.ai, Phaser.Physics.ARCADE);
-      this.ai.body.maxAngular = 250;
-      this.ai.body.angularDrag = 900;
-      this.ai.body.drag.set(100);
-      this.ai.body.maxVelocity.set(game.carVelocity + 75);
-      this.ai.body.collideWorldBounds = true;
+      this.AIs = [game.add.sprite(400, 400, this.aiColors[0]), game.add.sprite(400, 475, this.aiColors[1])];
+      console.log(this.AIs);
+      for (var i = 0; i < 2; i++) {
+        this.AIs[i].anchor.setTo(0.5, 0.5);
+        this.AIs[i].scale.setTo(.25, .25);
+        this.AIs[i].enableBody = true;
+        carGroup.add(this.AIs[i]);
+        game.physics.enable(this.AIs[i], Phaser.Physics.ARCADE);
+        this.AIs[i].body.maxAngular = 250;
+        this.AIs[i].body.angularDrag = 900;
+        this.AIs[i].body.drag.set(100);
+        this.AIs[i].maxVelocity = game.carVelocity + 68 + (Math.random() * (15));
+        this.AIs[i].body.maxVelocity.set(this.AIs[i].maxVelocity);
+        this.AIs[i].body.collideWorldBounds = true;
+        this.AIs[i].laps = 0;
+        this.AIs[i].previousLapTime = 0;
+      }
     }
 
     text = game.add.text(game.camera.width/2, game.camera.height/2, "Ready!");
@@ -122,15 +128,26 @@ var GameState = {
     // Check if the game if over or not
     if (game.lapsInRace == this.laps) {
       game.world.setBounds(0, 0, game.width, game.height);
-      if (this.timer.seconds.toFixed(2) < game.timeToFinish) {
-        game.state.start('level' + game.levelNumber + '_win');
+
+      if (game.hasAi) {
+        var first = true;
+        for (var i = 0; i < 2; i++) {
+          if (this.AIs[i].laps >= this.laps) {
+            first = false;
+          }
+        }
+        game.state.start('level' + game.levelNumber + (first ? '_win' : '_lose'));
       } else {
-        game.state.start('level' + game.levelNumber + '_lose');
+        if (this.timer.seconds.toFixed(2) < game.timeToFinish) {
+          game.state.start('level' + game.levelNumber + '_win');
+        } else {
+          game.state.start('level' + game.levelNumber + '_lose');
+        }
       }
     }
 
     game.physics.arcade.collide(this.car, grass)
-    //game.physics.arcade.collide(this.car, this.ai)
+    //game.physics.arcade.collide(this.car, ai)
 
     this.car.body.angularAcceleration = 0;
     this.car.body.acceleration.set(0);
@@ -187,31 +204,44 @@ var GameState = {
       }
       
       if (game.hasAi) {
-        //Update AI
-        this.ai.body.velocity.x = 0;
-        this.ai.body.velocity.y = 0;
-        tileX = Math.floor(this.ai.x / 256); 
-        tileY = Math.floor(this.ai.y / 256);
-        game.physics.arcade.collide(this.ai, grass, function () {
-          console.log('Above: ' + map.getTileAbove(map.getLayer(road), tileX, tileY).index);
-          console.log('Below: ' + map.getTileBelow(map.getLayer(road), tileX, tileY).index);
-          console.log('Right: ' + map.getTileRight(map.getLayer(road), tileX, tileY).index);
-          console.log('Left: ' + map.getTileLeft(map.getLayer(road), tileX, tileY).index);
-          if (this.ai.angle == 0 || this.ai.angle == 180 || this.ai.angle == -180) {
-            if (map.getTileAbove(map.getLayer(road), tileX, tileY).index != -1) {
-              this.ai.angle = -90;
-            } else if (map.getTileBelow(map.getLayer(road), tileX, tileY).index != -1) {
-              this.ai.angle = 90;
+        for (var i = 0; i < 2; i++) {
+          //Update AI
+          this.AIs[i].body.velocity.x = 0;
+          this.AIs[i].body.velocity.y = 0;
+          tileX = Math.floor(this.AIs[i].x / 256); 
+          tileY = Math.floor(this.AIs[i].y / 256);
+          game.physics.arcade.collide(this.AIs[i], grass, function () {
+            if (this.AIs[i].angle == 0 || this.AIs[i].angle == 180 || this.AIs[i].angle == -180) {
+              if (map.getTileAbove(map.getLayer(road), tileX, tileY).index != -1) {
+                this.AIs[i].angle = -90;
+              } else if (map.getTileBelow(map.getLayer(road), tileX, tileY).index != -1) {
+                this.AIs[i].angle = 90;
+              }
+            }  else if (this.AIs[i].angle == 90 || this.AIs[i].angle == -90) {
+              if (map.getTileRight(map.getLayer(road), tileX, tileY).index != -1) {
+                this.AIs[i].angle = 0;
+              } else if (map.getTileLeft(map.getLayer(road), tileX, tileY).index != -1) {
+                this.AIs[i].angle = 180;
+              }
             }
-          }  else if (this.ai.angle == 90 || this.ai.angle == -90) {
-            if (map.getTileRight(map.getLayer(road), tileX, tileY).index != -1) {
-              this.ai.angle = 0;
-            } else if (map.getTileLeft(map.getLayer(road), tileX, tileY).index != -1) {
-              this.ai.angle = 180;
+          }, null, this);
+
+          game.physics.arcade.collide(this.AIs[i], finishLine, null, function () {
+            console.log('ai lap');
+            if (this.AIs[i].y > finishLine.y) {
+              if (this.AIs[i].previousLapTime + 5 < this.timer.seconds) {
+                console.log('lap');
+                this.AIs[i].laps++;
+              }
+              this.AIs[i].previousLapTime = this.timer.seconds;
+              return false;
             }
-          }
-        }, null, this);
-        game.physics.arcade.velocityFromAngle(this.ai.angle, game.carVelocity + 75, this.ai.body.velocity);
+            return true;
+          }, this);
+
+          game.physics.arcade.velocityFromAngle(this.AIs[i].angle, this.AIs[i].maxVelocity, this.AIs[i].body.velocity);
+        }
+
       }
     }
 

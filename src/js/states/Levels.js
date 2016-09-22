@@ -1,6 +1,7 @@
 
 var Level1 = {
   preload: function () {
+    game.stage.backgroundColor = '#B8B8B8';
     game.load.audio('level1Sound', 'assets/audio/level1.mp3')
   },
   create: function () {
@@ -20,7 +21,7 @@ var Level1 = {
     levelText.anchor.setTo(0.5);
     levelText.fontSize = 30;
 
-    game.time.events.add(Phaser.Timer.SECOND*3, function() {
+    game.time.events.add(Phaser.Timer.SECOND*5, function() {
       game.state.start('game')
     }, this);
   }
@@ -28,6 +29,7 @@ var Level1 = {
 
 var Level1Win = {
  preload: function () {
+    game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "You Beat the Clock to Qualify!");
     levelHeading.anchor.setTo(0.5);
     levelHeading.fontSize = 40;
@@ -40,6 +42,7 @@ var Level1Win = {
 
 var Level1Lose = {
  preload: function () {
+    game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "Sorry, you were too slow\n\nYou will have to try again");
     levelHeading.anchor.setTo(0.5);
     levelHeading.fontSize = 40;
@@ -53,21 +56,21 @@ var Level1Lose = {
 
 var Level2 = {
   preload: function () {
+    game.stage.backgroundColor = '#B8B8B8';
     console.log('Level2');
-    levelHeading = game.add.text(game.world.centerX, 250, "Level 2");
+    levelHeading = game.add.text(game.world.centerX, 150, "Level 2");
     levelHeading.anchor.setTo(0.5);
     levelHeading.fontSize = 40;
 
     game.lapsInRace = 2;
-    game.timeToFinish = 37.5;
     game.levelNumber = '2';
     game.hasAi = true;
 
-    levelText = game.add.text(game.world.centerX, game.world.centerY, "Congrats!! You qualified. It's time to race with the big boys in your first race of the season!\nLaps: " + game.lapsInRace + "\nTime: " + game.timeToFinish);
+    levelText = game.add.text(game.world.centerX, game.world.centerY, "Congrats!! You qualified. It's time to race with the big boys in \nyour first race of the season!\n\nBeat the other cars to win.\n\nLaps: " + game.lapsInRace);
     levelText.anchor.setTo(0.5);
     levelText.fontSize = 30;
 
-    game.time.events.add(Phaser.Timer.SECOND*3, function() {
+    game.time.events.add(Phaser.Timer.SECOND*5, function() {
       game.state.start('game')
     }, this);
   }
@@ -75,6 +78,7 @@ var Level2 = {
 
 var Level2Win = {
  preload: function () {
+    game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "You beat the clock!");
     levelHeading.anchor.setTo(0.5);
     levelHeading.fontSize = 40;
@@ -87,6 +91,7 @@ var Level2Win = {
 
 var Level2Lose = {
  preload: function () {
+    game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "Sorry, you were too slow\n\nYou will have to try again");
     levelHeading.anchor.setTo(0.5);
     levelHeading.fontSize = 40;

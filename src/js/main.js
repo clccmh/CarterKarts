@@ -41,7 +41,9 @@ var initialState = {
 
     game.load.image('tilesheet', 'assets/tilesheets/tilesheet.png');
 
-    game.load.audio('car', 'assets/audio/choose_your_car.mp3')
+    game.load.audio('car', 'assets/audio/choose_your_car.mp3');
+
+    game.load.spritesheet('back_to_main', 'assets/buttons/back_to_main_button.png');
   },
 
   create: function () {

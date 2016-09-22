@@ -2,3 +2,13 @@
 canvas {
   margin: auto;
 }
+
+body {
+  background-color: black;
+}
+
+#closed_warning {
+  position: absolute;
+  bottom: 0;
+  color: grey;
+}
