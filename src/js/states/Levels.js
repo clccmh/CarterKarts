@@ -102,4 +102,17 @@ var Level2Lose = {
   }
 };
 
+var CarDestroyed = {
+ preload: function () {
+    game.stage.backgroundColor = '#B8B8B8';
+    levelHeading = game.add.text(game.world.centerX, 250, "Nice one hot shot!\nYou destroyed your only car.\nTry again next year.");
+    levelHeading.anchor.setTo(0.5);
+    levelHeading.fontSize = 40;
+
+    game.time.events.add(Phaser.Timer.SECOND*3, function() {
+      game.state.start('level1')
+    }, this);
+  }
+};
+
 

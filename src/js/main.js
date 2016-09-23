@@ -44,6 +44,10 @@ var initialState = {
     game.load.audio('car', 'assets/audio/choose_your_car.mp3');
 
     game.load.spritesheet('back_to_main', 'assets/buttons/back_to_main_button.png');
+
+    game.load.spritesheet('health_green', 'assets/sprites/health_green.png');
+    game.load.spritesheet('health_red', 'assets/sprites/health_red.png');
+    game.load.audio('crash', 'assets/audio/crash.mp3');
   },
 
   create: function () {
@@ -56,6 +60,7 @@ var initialState = {
     game.state.add('level2', Level2);
     game.state.add('level2_win', Level2Win);
     game.state.add('level2_lose', Level2Lose);
+    game.state.add('car_destroyed', CarDestroyed);
     game.state.add('upgrade', CarUpgrade);
     game.state.add('game', GameState);
     game.state.add('credits', Credits);

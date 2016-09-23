@@ -55,6 +55,24 @@ var GameState = {
     this.lapText.fixedToCamera = true;
     textGroup.add(this.lapText);
 
+    // Car damage mechanic
+    damageText = game.add.text(5, 45, "Damage:");
+    damageText.fontSize = 20;
+    damageText.fill = "#ffffff";
+    damageText.fixedToCamera = true;
+    textGroup.add(damageText);
+
+    redHealth = game.add.sprite(105, 53, 'health_red');
+    redHealth.fixedToCamera = true;
+    redHealth.scale.x = (100 + (10 * game.strengthPoints)) / 100;
+    textGroup.add(redHealth);
+
+    greenHealth = game.add.sprite(105, 53, 'health_green');
+    greenHealth.fixedToCamera = true;
+    textGroup.add(greenHealth);
+
+    crash = game.add.audio('crash');
+
     map.setCollisionBetween(1, 10000, true, grass);
     grass.resizeWorld();
 
@@ -71,6 +89,8 @@ var GameState = {
     this.car.body.drag.set(100);
     this.car.body.maxVelocity.set(game.carVelocity);
     this.car.body.collideWorldBounds = true;
+    this.car.damage = 100 + (10*game.strengthPoints);
+    this.car.previousCollision = 0;
 
     game.camera.follow(this.car);
     
@@ -89,6 +109,7 @@ var GameState = {
         this.AIs[i].maxVelocity = game.carVelocity + 68 + (Math.random() * (15));
         this.AIs[i].body.maxVelocity.set(this.AIs[i].maxVelocity);
         this.AIs[i].body.collideWorldBounds = true;
+        this.AIs[i].body.imovable = true;
         this.AIs[i].laps = 0;
         this.AIs[i].previousLapTime = 0;
       }
@@ -146,17 +167,37 @@ var GameState = {
       }
     }
 
-    game.physics.arcade.collide(this.car, grass)
-    //game.physics.arcade.collide(this.car, ai)
+    if (this.car.damage < 1) {
+      game.world.setBounds(0, 0, game.width, game.height);
+      game.state.start('car_destroyed');
+    }
+
+    game.physics.arcade.collide(this.car, grass, function () {
+      if (this.car.previousCollision + .1 < this.timer.seconds) {
+        crash.play();
+        console.log('damage: ' + --this.car.damage);
+        this.car.previousCollision = this.timer.seconds;
+      }
+    }, null, this);
+
+    if (game.hasAi) {
+      for (var i = 0; i < 2; i++) {
+        game.physics.arcade.collide(this.AIs[i], this.car, function () {
+          if (this.car.previousCollision + .1 < this.timer.seconds) {
+            crash.play();
+            console.log('damage: ' + --this.car.damage);
+            this.car.previousCollision = this.timer.seconds;
+          }
+        }, null, this);
+      }
+    }
 
     this.car.body.angularAcceleration = 0;
     this.car.body.acceleration.set(0);
     if (!game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       this.car.body.velocity.x = 0;
       this.car.body.velocity.y = 0;
-    } else {
-      console.log('drifting');
-    }
+    } 
 
     // Disables input while the countdown is happening
     if (!this.preRace) {
@@ -251,6 +292,7 @@ var GameState = {
     this.raceTime.setText("Time: " + this.timer.seconds.toFixed(2));
     this.lapText.setText("Laps: " + this.laps);
     game.debug.spriteBounds(finishLine);
+    greenHealth.scale.x = this.car.damage / 100;
   }
 
 };
