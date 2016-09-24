@@ -61,6 +61,15 @@ var initialState = {
     game.state.add('level2', Level2);
     game.state.add('level2_win', Level2Win);
     game.state.add('level2_lose', Level2Lose);
+    game.state.add('level3', Level3);
+    game.state.add('level3_win', Level3Win);
+    game.state.add('level3_lose', Level3Lose);
+    game.state.add('level4', Level4);
+    game.state.add('level4_win', Level4Win);
+    game.state.add('level4_lose', Level4Lose);
+    game.state.add('level5', Level5);
+    game.state.add('level5_win', Level5Win);
+    game.state.add('level5_lose', Level5Lose);
     game.state.add('car_destroyed', CarDestroyed);
     game.state.add('upgrade', CarUpgrade);
     game.state.add('game', GameState);
