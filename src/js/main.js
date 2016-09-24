@@ -48,6 +48,7 @@ var initialState = {
     game.load.spritesheet('health_green', 'assets/sprites/health_green.png');
     game.load.spritesheet('health_red', 'assets/sprites/health_red.png');
     game.load.audio('crash', 'assets/audio/crash.mp3');
+    game.adapt = 0;
   },
 
   create: function () {

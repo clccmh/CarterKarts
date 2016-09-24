@@ -13,7 +13,7 @@ var Level1 = {
     levelHeading.fontSize = 40;
 
     game.lapsInRace = 2;
-    game.timeToFinish = 38;
+    game.timeToFinish = 38 + (5*game.adapt);
     game.levelNumber = '1';
     game.hasAi = false;
 
@@ -48,6 +48,7 @@ var Level1Lose = {
     levelHeading.fontSize = 40;
 
     game.time.events.add(Phaser.Timer.SECOND*3, function() {
+      game.adapt++;
       game.state.start('level1')
     }, this);
   }

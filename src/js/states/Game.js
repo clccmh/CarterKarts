@@ -106,10 +106,10 @@ var GameState = {
         this.AIs[i].body.maxAngular = 250;
         this.AIs[i].body.angularDrag = 900;
         this.AIs[i].body.drag.set(100);
-        this.AIs[i].maxVelocity = game.carVelocity + 68 + (Math.random() * (15));
+        this.AIs[i].maxVelocity = game.carVelocity + 68 + (Math.random() * (15)) - (5 * game.adapt);
         this.AIs[i].body.maxVelocity.set(this.AIs[i].maxVelocity);
         this.AIs[i].body.collideWorldBounds = true;
-        this.AIs[i].body.imovable = true;
+        this.AIs[i].body.bounce = 0;
         this.AIs[i].laps = 0;
         this.AIs[i].previousLapTime = 0;
       }
