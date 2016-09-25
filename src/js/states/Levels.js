@@ -1,12 +1,8 @@
 
 var Level1 = {
-  preload: function () {
-    game.stage.backgroundColor = '#B8B8B8';
-    game.load.audio('level1Sound', 'assets/audio/level1.mp3')
-  },
   create: function () {
     game.add.audio('level1Sound').play();
-
+    game.stage.backgroundColor = '#B8B8B8';
     console.log('Level1');
     levelHeading = game.add.text(game.world.centerX, 250, "Level 1");
     levelHeading.anchor.setTo(0.5);
@@ -28,7 +24,8 @@ var Level1 = {
 };
 
 var Level1Win = {
- preload: function () {
+ create: function () {
+    game.add.audio('winSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "You Beat the Clock to Qualify!");
     levelHeading.anchor.setTo(0.5);
@@ -41,7 +38,8 @@ var Level1Win = {
 };
 
 var Level1Lose = {
- preload: function () {
+ create: function () {
+    game.add.audio('loseSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "Sorry, you were too slow\n\nYou will have to try again");
     levelHeading.anchor.setTo(0.5);
@@ -55,7 +53,8 @@ var Level1Lose = {
 
 
 var Level2 = {
-  preload: function () {
+  create: function () {
+    game.add.audio('level2Sound').play();
     game.stage.backgroundColor = '#B8B8B8';
     console.log('Level2');
     levelHeading = game.add.text(game.world.centerX, 150, "Level 2");
@@ -70,16 +69,17 @@ var Level2 = {
     levelText.anchor.setTo(0.5);
     levelText.fontSize = 30;
 
-    game.time.events.add(Phaser.Timer.SECOND*5, function() {
+    game.time.events.add(Phaser.Timer.SECOND*7, function() {
       game.state.start('game')
     }, this);
   }
 };
 
 var Level2Win = {
- preload: function () {
+ create: function () {
+    game.add.audio('winSound').play();
     game.stage.backgroundColor = '#B8B8B8';
-    levelHeading = game.add.text(game.world.centerX, 250, "You beat the clock!");
+    levelHeading = game.add.text(game.world.centerX, 250, "You win!");
     levelHeading.anchor.setTo(0.5);
     levelHeading.fontSize = 40;
 
@@ -90,7 +90,8 @@ var Level2Win = {
 };
 
 var Level2Lose = {
- preload: function () {
+ create: function () {
+    game.add.audio('loseSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "Sorry, you were too slow\n\nYou will have to try again");
     levelHeading.anchor.setTo(0.5);
@@ -104,13 +105,9 @@ var Level2Lose = {
 };
 
 var Level3 = {
-  preload: function () {
-    game.stage.backgroundColor = '#B8B8B8';
-    //game.load.audio('level1Sound', 'assets/audio/level1.mp3')
-  },
   create: function () {
-    //game.add.audio('level1Sound').play();
-
+    game.add.audio('level3Sound').play();
+    game.stage.backgroundColor = '#B8B8B8';
     console.log('Level3');
     levelHeading = game.add.text(game.world.centerX, 250, "Level 3");
     levelHeading.anchor.setTo(0.5);
@@ -124,14 +121,15 @@ var Level3 = {
     levelText.anchor.setTo(0.5);
     levelText.fontSize = 30;
 
-    game.time.events.add(Phaser.Timer.SECOND*5, function() {
+    game.time.events.add(Phaser.Timer.SECOND*6, function() {
       game.state.start('game')
     }, this);
   }
 };
 
 var Level3Win = {
- preload: function () {
+ create: function () {
+    game.add.audio('winSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "You won");
     levelHeading.anchor.setTo(0.5);
@@ -144,7 +142,8 @@ var Level3Win = {
 };
 
 var Level3Lose = {
- preload: function () {
+ create: function () {
+    game.add.audio('loseSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "Sorry, you were too slow\n\nYou will have to try again");
     levelHeading.anchor.setTo(0.5);
@@ -158,13 +157,9 @@ var Level3Lose = {
 };
 
 var Level4 = {
-  preload: function () {
-    game.stage.backgroundColor = '#B8B8B8';
-    //game.load.audio('level1Sound', 'assets/audio/level1.mp3')
-  },
   create: function () {
-    //game.add.audio('level1Sound').play();
-
+    game.add.audio('level4Sound').play();
+    game.stage.backgroundColor = '#B8B8B8';
     console.log('Level4');
     levelHeading = game.add.text(game.world.centerX, 250, "Level 4");
     levelHeading.anchor.setTo(0.5);
@@ -178,14 +173,15 @@ var Level4 = {
     levelText.anchor.setTo(0.5);
     levelText.fontSize = 30;
 
-    game.time.events.add(Phaser.Timer.SECOND*5, function() {
+    game.time.events.add(Phaser.Timer.SECOND*6, function() {
       game.state.start('game')
     }, this);
   }
 };
 
 var Level4Win = {
- preload: function () {
+  create: function () {
+    game.add.audio('winSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "You won");
     levelHeading.anchor.setTo(0.5);
@@ -198,7 +194,8 @@ var Level4Win = {
 };
 
 var Level4Lose = {
- preload: function () {
+ create: function () {
+    game.add.audio('loseSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "Sorry, you were too slow\n\nYou will have to try again");
     levelHeading.anchor.setTo(0.5);
@@ -213,12 +210,9 @@ var Level4Lose = {
 
 
 var Level5 = {
-  preload: function () {
-    game.stage.backgroundColor = '#B8B8B8';
-    //game.load.audio('level1Sound', 'assets/audio/level1.mp3')
-  },
   create: function () {
-    //game.add.audio('level1Sound').play();
+    game.add.audio('level5Sound').play();
+    game.stage.backgroundColor = '#B8B8B8';
 
     console.log('Level5');
     levelHeading = game.add.text(game.world.centerX, 250, "Level 5");
@@ -233,14 +227,15 @@ var Level5 = {
     levelText.anchor.setTo(0.5);
     levelText.fontSize = 30;
 
-    game.time.events.add(Phaser.Timer.SECOND*5, function() {
+    game.time.events.add(Phaser.Timer.SECOND*7, function() {
       game.state.start('game')
     }, this);
   }
 };
 
 var Level5Win = {
- preload: function () {
+ create: function () {
+    game.add.audio('endWinSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "You won!\n\nYou are the best driver in the world!!");
     levelHeading.anchor.setTo(0.5);
@@ -253,7 +248,8 @@ var Level5Win = {
 };
 
 var Level5Lose = {
- preload: function () {
+  create: function () {
+    game.add.audio('loseSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "Sorry, you were too slow\n\nYou will have to try again");
     levelHeading.anchor.setTo(0.5);
@@ -269,6 +265,7 @@ var Level5Lose = {
 
 var CarDestroyed = {
  preload: function () {
+    game.add.audio('carDestroyedSound').play();
     game.stage.backgroundColor = '#B8B8B8';
     levelHeading = game.add.text(game.world.centerX, 250, "Nice one hot shot!\nYou destroyed your only car.\nTry again next year.");
     levelHeading.anchor.setTo(0.5);

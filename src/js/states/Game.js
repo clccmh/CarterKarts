@@ -20,6 +20,7 @@ var GameState = {
   },
 
   create: function () {
+    
 
     this.preRace = true;
 
@@ -49,7 +50,7 @@ var GameState = {
     this.laps = 0;
     this.previousLapTime = 0;
 
-    this.lapText = game.add.text(5, 15, "Laps: 0");
+    this.lapText = game.add.text(5, 22, "Laps: 0");
     this.lapText.fontSize = 20;
     this.lapText.fill = "#ffffff";
     this.lapText.fixedToCamera = true;
@@ -83,7 +84,7 @@ var GameState = {
     carGroup.add(this.car);
     game.physics.enable(this.car, Phaser.Physics.ARCADE);
     this.car.body.maxAngular = 250;
-    this.car.body.angularDrag = 900;
+    this.car.body.angularDrag = 1500;
 
     game.carVelocity = 500 + (game.enginePoints*10);
     this.car.body.drag.set(100);
@@ -123,7 +124,7 @@ var GameState = {
 
     this.timer = this.game.time.create(this.game);
 
-    this.raceTime = game.add.text(5, 0, "Time: 0.00");
+    this.raceTime = game.add.text(5, 2, "Time: 0.00");
     this.raceTime.fontSize = 20;
     this.raceTime.fill = "#ffffff";
     this.raceTime.fixedToCamera = true;
@@ -215,15 +216,17 @@ var GameState = {
       }, this);
 
       if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) || game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-        if (this.car.body.acceleration > 0) {
+        if (this.car.body.angularVelocity > 0) {
           this.car.body.angularVelocity = 0;
-          this.car.body.angularAcceleration = -1500;
+          //this.car.body.angularAcceleration = -1500;
+          this.car.body.angularAcceleration = 0;
         }
         this.car.body.angularAcceleration -= 500 + (game.tirePoints*200);
       } else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) || game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-        if (this.car.body.acceleration < 0) {
+        if (this.car.body.angularVelocity < 0) {
           this.car.body.angularVelocity = 0;
-          this.car.body.angularAcceleration = 1500;
+          //this.car.body.angularAcceleration = 1500;
+          this.car.body.angularAcceleration = 0;
         }
         this.car.body.angularAcceleration += 500 + (game.tirePoints*200);
       }

@@ -3,6 +3,7 @@ var MainMenu = {
 
   create: function () {
     backgroundMusic = game.add.audio('background_music');
+    backgroundMusic.volume = .75;
     backgroundMusic.loop = true;
     backgroundMusic.play();
 

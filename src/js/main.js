@@ -49,6 +49,17 @@ var initialState = {
     game.load.spritesheet('health_red', 'assets/sprites/health_red.png');
     game.load.audio('crash', 'assets/audio/crash.mp3');
     game.adapt = 0;
+
+    game.load.audio('level1Sound', 'assets/audio/level1.mp3')
+    game.load.audio('level2Sound', 'assets/audio/level2.mp3')
+    game.load.audio('level3Sound', 'assets/audio/level3.mp3')
+    game.load.audio('level4Sound', 'assets/audio/level4.mp3')
+    game.load.audio('level5Sound', 'assets/audio/level5.mp3')
+    game.load.audio('winSound', 'assets/audio/win.mp3')
+    game.load.audio('loseSound', 'assets/audio/lose.mp3')
+    game.load.audio('endWinSound', 'assets/audio/end_win.mp3')
+    game.load.audio('carDestroyedSound', 'assets/audio/car_destroyed.mp3')
+
   },
 
   create: function () {
