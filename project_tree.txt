@@ -1,0 +1,73 @@
+.
+├── project_tree.txt
+├── Proposal
+├── Proposal.pdf
+├── README.html
+└── src
+    ├── assets
+    │   ├── audio
+    │   │   ├── background.mp3
+    │   │   ├── background_origin.mp3
+    │   │   ├── car_destroyed.mp3
+    │   │   ├── choose_your_car.mp3
+    │   │   ├── crash.mp3
+    │   │   ├── end_win.mp3
+    │   │   ├── engine.mp3
+    │   │   ├── level1.mp3
+    │   │   ├── level2.mp3
+    │   │   ├── level3.mp3
+    │   │   ├── level4.mp3
+    │   │   ├── level5.mp3
+    │   │   ├── lose.mp3
+    │   │   ├── tutorial.mp3
+    │   │   └── win.mp3
+    │   ├── buttons
+    │   │   ├── back_to_main_button.png
+    │   │   ├── blank_button.xcf
+    │   │   ├── buttons.png
+    │   │   ├── credits_button.png
+    │   │   ├── engine.png
+    │   │   ├── start_button.png
+    │   │   ├── strength.png
+    │   │   └── tires.png
+    │   ├── images
+    │   │   ├── main_background.jpeg
+    │   │   ├── main_background.png
+    │   │   └── main_background.png.backup
+    │   ├── maps
+    │   │   ├── Level1.json
+    │   │   ├── Level2.json
+    │   │   ├── Level3.json
+    │   │   ├── Level4.json
+    │   │   └── Level5.json
+    │   ├── sprites
+    │   │   ├── bar.png
+    │   │   ├── BlueCar.png
+    │   │   ├── cars_racer.svg
+    │   │   ├── GreenCar.png
+    │   │   ├── health_green.png
+    │   │   ├── health_red.png
+    │   │   ├── RedCar.png
+    │   │   └── YellowCar.png
+    │   └── tilesheets
+    │       ├── grass.xcf
+    │       ├── tilesheet_old.png
+    │       ├── tilesheet.png
+    │       └── tilesheet.xcf
+    ├── css
+    │   └── main.css
+    ├── index.html
+    └── js
+        ├── lib
+        │   └── phaser.min.js
+        ├── main.js
+        └── states
+            ├── CarChoose.js
+            ├── CarUpgrade.js
+            ├── Credits.js
+            ├── Game.js
+            ├── Levels.js
+            ├── MainMenu.js
+            └── Tutorial.js
+
+12 directories, 58 files
